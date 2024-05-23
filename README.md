@@ -1,6 +1,8 @@
 # JesseHanson_OAuthCustomerLogin module
 
-This module allows logging into a Magento Customer account via Google/OAuth2/OpenID and Keycloak. PKCE is supported with Keycloak also.
+This is a module for Magento 2.
+This module enables functionality for registering and logging into a Magento Customer account using Google/OAuth2/OpenID and Keycloak. PKCE is supported with Keycloak also.
+Google has been enabled and integrated into the customer experience. Others are supported also, such as Twitter, Facebook, etc. It's just a matter of following the pattern which is already in this module, and hooking into the existing functionality.
 
 ## Installation details
 
