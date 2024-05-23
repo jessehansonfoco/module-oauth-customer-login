@@ -1,0 +1,19 @@
+{
+    "name": "jessehansonfoco/module-oauth-customer-login",
+    "version": "2.4.4",
+    "type": "magento2-module",
+    "description": "Google and Keycloak OAuth2 Customer Login module for Magento 2",
+    "require": {
+        "magento/framework": ">=101.0.7",
+        "lusitanian/oauth": "v0.8.11",
+        "google/apiclient": "^2.12"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "JesseHanson\\OAuthCustomerLogin\\": ""
+        }
+    }
+}

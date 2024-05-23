@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="collect_oauth_providers">
+
+        <observer name="collect_oauth_providers_keycloak_observer"
+                  instance="JesseHanson\OAuthCustomerLogin\Observer\KeycloakProviderObserver" />
+
+        <observer name="collect_oauth_providers_google_observer"
+                  instance="JesseHanson\OAuthCustomerLogin\Observer\GoogleProviderObserver" />
+
+    </event>
+
+    <event name="oauth_login_success">
+
+        <observer name="keycloak_login_success"
+                  instance="JesseHanson\OAuthCustomerLogin\Observer\KeycloakLoginSuccess" />
+
+        <observer name="google_login_success"
+                  instance="JesseHanson\OAuthCustomerLogin\Observer\GoogleLoginSuccess" />
+
+    </event>
+
+</config>

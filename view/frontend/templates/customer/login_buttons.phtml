@@ -1,0 +1,42 @@
+<?php
+
+/** @var \JesseHanson\OAuthCustomerLogin\Block\Customer\Login $block */
+?>
+
+<?php if ($block->isGoogleEnabled()): ?>
+<div class="block block-google-login">
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2">Sign in with Google</strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+        <p>If you have a Google account, you can log in here.</p>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <a href="<?= $block->getUrl('oauthcustomer/login/start', ['provider' => 'google']) ?>" class="action primary google">
+                    <span>Sign in with Google</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php if ($block->isKeycloakEnabled()): ?>
+    <div class="block block-google-login">
+        <div class="block-title">
+            <strong id="block-customer-login-heading" role="heading" aria-level="2">Sign in with your Identity Provider</strong>
+        </div>
+        <div class="block-content" aria-labelledby="block-customer-login-heading">
+            <p>If you have an internal account, you can log in here.</p>
+
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <a href="<?= $block->getUrl('oauthcustomer/login/start', ['provider' => 'keycloak']) ?>" class="action primary keycloak">
+                        <span>Sign in with Provider</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

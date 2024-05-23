@@ -1,0 +1,34 @@
+<?php
+
+use JesseHanson\OAuthCustomerLogin\Helper\OAuth2;
+/** @var \JesseHanson\OAuthCustomerLogin\Block\Test $block */
+
+/** @var OAuth2 $oauthHelper */
+$oauthHelper = $this->helper(OAuth2::class);
+
+?>
+
+<h2>OAuth2 Test Page</h2>
+
+<p>
+    <strong>OpenID Connect</strong> is a special way of obtaining information about a user.
+    <br><br>Documentation: <a href="https://openid.net/specs/openid-connect-basic-1_0-22.html">https://openid.net/specs/openid-connect-basic-1_0-22.html</a>
+    <br><br>Click the link below to start the OpenID connect flow.
+    <br>It is initiated with an authorize request (just like in <code>Authorization Code</code>) but with the <code>scope</code> querystring parameter including the value <code>"openid"</code>.
+</p>
+
+<?php if ($oauthHelper->isProviderEnabled('keycloak')): ?>
+    <p>
+        <a class="button" href="<?= $block->getUrl('oauthcustomer/test/start', ['provider' => 'keycloak']) ?>">Test Keycloak</a>
+    </p>
+<?php endif; ?>
+
+<?php if ($oauthHelper->isProviderEnabled('google')): ?>
+    <p>
+        <a class="button" href="<?= $block->getUrl('oauthcustomer/test/start', ['provider' => 'google']) ?>">Test Google</a>
+    </p>
+<?php endif; ?>
+
+<div class="help">
+    This uses the Authorization Code Grant and adds the "openid" scope parameter. With Google and others, an ID Token comes back with the Access Token
+</div>

@@ -1,0 +1,91 @@
+<?php
+/** @var \JesseHanson\OAuthCustomerLogin\Block\Test $block */
+
+use Google\Service\Oauth2;
+
+$oauthHelper = $block->getOAuthHelper();
+$token = '';
+$providerCode = $oauthHelper->getCurrentProviderCode();
+$expired = false;
+
+if ($providerCode):
+
+    $provider = $oauthHelper->getProvider($providerCode);
+    $providerServiceCode = $oauthHelper->getProviderServiceCode($providerCode);
+    $storage = $oauthHelper->createProviderStorage($providerCode);
+
+    try {
+        $token = $storage->retrieveAccessToken($providerServiceCode);
+    } catch(\OAuth\Common\Storage\Exception\TokenNotFoundException $e) {
+        $token = '';
+    } catch(\OAuth\Common\Token\Exception\ExpiredTokenException $e) {
+        $token = '';
+        $expired = true;
+    }
+
+    if ($token):
+?>
+
+<h2>Token Retrieved</h2>
+<p>You can now use this token to make a request to the OAuth2.0 Server's APIs</p>
+<pre>Access Token:
+
+<code><?= $token->getAccessToken() ?></code>
+</pre>
+
+<?php if ($token->getEndOfLife()): ?>
+    <em>Expires at: <?= $token->getEndOfLife() ?> , in <?= $token->getEndOfLife() - time() ?> seconds</em>
+<?php endif; ?>
+
+<?php
+
+    if ($provider instanceof \JesseHanson\OAuthCustomerLogin\OAuth2\Service\Google) {
+
+        $googleData = $oauthHelper->createGoogleData($token);
+        if ($googleData) {
+
+            $googleClient = $oauthHelper->createGoogleClient();
+            $googleClient->setAccessToken($googleData);
+
+            $oauth = new Oauth2($googleClient);
+            $userinfo = $oauth->userinfo->get();
+
+        } else {
+
+            $userinfo = new \stdClass();
+            $userinfo->error = 'Error: ID Token not found';
+        }
+
+    } elseif ($provider instanceof \JesseHanson\OAuthCustomerLogin\OAuth2\Service\OpenIdConnectInterface) {
+
+        $userinfo = @ json_decode($provider->request($provider->getResourceEndpoint()));
+
+    } elseif (is_int(strpos($token->getAccessToken(), '.'))) {
+
+        $userinfo = $oauthHelper->decodeAccessToken($token->getAccessToken());
+    } else {
+
+        $userinfo = new \stdClass();
+    }
+
+?>
+<p>Here is your userinfo:</p>
+<pre><?= print_r($userinfo, 1) ?></pre>
+
+    <?php else: ?>
+
+        <?php if ($expired): ?>
+            <h2>Token not found</h2>
+            <p>Click <a href="<?= $block->getUrl('oauthlogin/test/welcome') ?>">Here</a> to start over. </p>
+        <?php else: ?>
+            <h2>Token Expired</h2>
+            <p>Click <a href="<?= $block->getUrl('oauthlogin/test/welcome') ?>">Here</a> to start over. </p>
+        <?php endif; ?>
+
+    <?php endif; ?>
+<?php else: ?>
+
+    <h2>The current provider code was not found in the session</h2>
+
+    <p>Click <a href="<?= $block->getUrl('oauthlogin/test/welcome') ?>">Here</a> to start over. </p>
+<?php endif; ?>

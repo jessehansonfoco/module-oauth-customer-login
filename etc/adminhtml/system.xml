@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="oauthcustomerlogin" translate="label" sortOrder="100">
+            <label>OAuth2 Login</label>
+        </tab>
+        <section id="oauthcustomerlogin" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>OAuth Customer Login</label>
+            <tab>oauthcustomerlogin</tab>
+            <resource>JesseHanson_OAuthCustomerLogin::configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="is_testpage_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Test Pages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="keycloak" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Keycloak</label>
+                <field id="is_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="force_redirect" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Force Redirect to Keycloak Login and Registration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[If enabled, the default Magento login and registration URLs will always redirect to Keycloak. Otherwise, a link will be added for login/registration.]]>
+                    </comment>
+                </field>
+                <field id="realm" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Realm</label>
+                </field>
+                <field id="client_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client ID</label>
+                </field>
+                <field id="client_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client Secret</label>
+                    <comment>
+                        <![CDATA[This is required if Access Type 'confidential' is selected in Keycloak.]]>
+                    </comment>
+                </field>
+                <field id="base_url" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Keycloak Base URL</label>
+                    <comment>
+                        <![CDATA[eg https://keycloak.domain.com/ , and the code will figure out the rest]]>
+                    </comment>
+                </field>
+                <field id="is_pkce_enabled" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable PKCE ?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA["Proof Key for Code Exchange" Code Challenge Method, assumes S256]]>
+                    </comment>
+                </field>
+            </group>
+
+            <group id="google" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Google</label>
+                <field id="is_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="client_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client ID</label>
+                </field>
+                <field id="client_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client Secret</label>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>
